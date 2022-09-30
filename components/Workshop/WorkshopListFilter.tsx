@@ -19,7 +19,7 @@ export default function WorkshopListFilter({ onFilterChange }: IProps) {
   }, [filterState]);
 
   return (
-    <Box p="6" display={{ base: "none", md: "block" }} w="800px">
+    <Box pb="7" display={{ base: "none", md: "block" }} w="800px">
       <HStack spacing={1}>
         <Input
           rounded={"full"}

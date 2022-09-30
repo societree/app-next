@@ -10,7 +10,7 @@ interface IProps {
 export default function WorkshopListingBody({ workshop }: IProps) {
   return (
     <Box>
-      <Box color="gray.700" bg="gray.50" py="6" px={{ base: "2", md: "40" }}>
+      <Box color="gray.700" bg="gray.50" py="6" px={{ base: "2", md: "10" }}>
         <Box
           bg="white"
           maxW={"300px"}
@@ -39,7 +39,7 @@ export default function WorkshopListingBody({ workshop }: IProps) {
           </Flex>
         </Box>
       </Box>
-      <Box px={{ base: "2", md: "40" }} py="6">
+      <Box px={{ base: "2", md: "10" }} py="6">
         <Text mb="1" fontWeight={"semibold"}>
           Details
         </Text>

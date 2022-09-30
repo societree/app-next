@@ -1,8 +1,7 @@
-import { Box, Stack } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
+import { Stack } from "@chakra-ui/react";
 import React from "react";
-import { data } from "../../shared/data/supabase";
 import { Workshop } from "../../shared/schemas";
+import ResponsiveContainer from "../Layout/ResponsiveContainer";
 import WorkshopCard from "./WorkshopListCard";
 import WorkshopListFilter from "./WorkshopListFilter";
 
@@ -13,7 +12,7 @@ interface IProps {
 
 export default function WorkshopList({ workshops, hideFilter }: IProps) {
   return (
-    <Box>
+    <ResponsiveContainer>
       {!hideFilter ? (
         <WorkshopListFilter onFilterChange={(data) => console.log(data)} />
       ) : null}
@@ -22,6 +21,6 @@ export default function WorkshopList({ workshops, hideFilter }: IProps) {
           <WorkshopCard key={w.id} workshop={w} />
         ))}
       </Stack>
-    </Box>
+    </ResponsiveContainer>
   );
 }

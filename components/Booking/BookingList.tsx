@@ -20,7 +20,6 @@ export default function BookingList({ bookings }: IProps) {
   return (
     <Box>
       <BookingListHeading bookings={bookings} />
-
       <Stack spacing={0}>
         {bookings?.map((booking) => (
           <BookingListCard key={booking.id} booking={booking} />

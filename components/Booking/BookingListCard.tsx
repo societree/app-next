@@ -63,7 +63,7 @@ export default function BookingListCard({ booking }: IProps) {
       alignItems={"center"}
       borderBottomWidth="1px"
       borderBottomColor={"gray.300"}
-      w={"100%"}
+      w={"80%"}
       _hover={{
         background: "gray.50",
       }}

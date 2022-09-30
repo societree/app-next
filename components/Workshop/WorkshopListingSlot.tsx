@@ -1,8 +1,10 @@
 import { Box, Button, Text } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import React from "react";
 import { MdOutlineIosShare } from "react-icons/md";
 import { Slot } from "../../shared/schemas";
 import { dateToReadable, timeToReadable } from "../../utils/dates";
+import { useSession } from "../../utils/hooks";
 
 interface IProps {
   slot: Slot;
@@ -10,10 +12,11 @@ interface IProps {
 }
 
 export default function WorkshopListingSlot({ slot, onJoin }: IProps) {
+  const session = useSession();
   return (
     <Box
       py="5"
-      px={{ base: "2", md: "40" }}
+      px={{ base: "2", md: "10" }}
       borderTop={"1px"}
       borderTopColor="gray.200"
       display="flex"
@@ -37,15 +40,17 @@ export default function WorkshopListingSlot({ slot, onJoin }: IProps) {
         >
           Share
         </Button>
-        <Button
-          rounded="full"
-          colorScheme="green"
-          variant={"solid"}
-          onClick={() => onJoin()}
-          size="md"
-        >
-          Attend online
-        </Button>
+        {session?.user ? (
+          <Button
+            rounded="full"
+            colorScheme="green"
+            variant={"solid"}
+            onClick={() => onJoin()}
+            size="md"
+          >
+            Attend online
+          </Button>
+        ) : null}
       </Box>
     </Box>
   );

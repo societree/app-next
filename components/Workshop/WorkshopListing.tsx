@@ -1,6 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
 import { Slot, Workshop } from "../../shared/schemas";
+import ResponsiveContainer from "../Layout/ResponsiveContainer";
 import WorkshopListingBody from "./WorkshopListingBody";
 import WorkshopListingHeading from "./WorkshopListingHeading";
 import WorkshopListingSlotList from "./WorkshopListingSlotList";
@@ -12,10 +13,10 @@ interface IProps {
 
 export default function WorkshopListing({ workshop, slots }: IProps) {
   return (
-    <Box>
+    <ResponsiveContainer>
       <WorkshopListingHeading workshop={workshop} />
       <WorkshopListingBody workshop={workshop} />
       <WorkshopListingSlotList workshop={workshop} slots={slots} />
-    </Box>
+    </ResponsiveContainer>
   );
 }
