@@ -1,6 +1,9 @@
 import { atom } from "recoil";
 
-export const authenticationModalIsOpen = atom({
+/**
+ * Authentication modal open state
+ */
+export const authenticationModalState = atom({
   key: "authModalState",
   default: false,
 });

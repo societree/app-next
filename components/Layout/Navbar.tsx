@@ -22,7 +22,7 @@ import { useRouter } from "next/router";
 import AuthenticationModal from "../AuthenticationModal";
 import { useSession } from "../../utils/hooks";
 import { auth } from "../../shared/auth/supabase";
-import { authenticationModalIsOpen } from "../../shared/recoil/atoms";
+import { authenticationModalState } from "../../shared/recoil/atoms";
 import { useRecoilState } from "recoil";
 
 const Links = [{ label: "Find workshops", onClick: () => "" }];
@@ -47,8 +47,8 @@ export default function Navbar() {
   const router = useRouter();
   const session = useSession();
 
-  const [authModalState, setAuthModalState] = useRecoilState(
-    authenticationModalIsOpen
+  const [authModalIsOpen, setAuthModalModalIsOpen] = useRecoilState(
+    authenticationModalState
   );
 
   return (
@@ -63,7 +63,7 @@ export default function Navbar() {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={"center"}>
-            <Box onClick={() => router.push("/workshops")}>
+            <Box onClick={() => router.push("/")}>
               <Img
                 height={"45px"}
                 cursor="pointer"
@@ -85,9 +85,7 @@ export default function Navbar() {
               <Button
                 variant={"text"}
                 size={"sm"}
-                mr={4}
-                color="green.500"
-                onClick={() => setAuthModalState(true)}
+                onClick={() => setAuthModalModalIsOpen(true)}
               >
                 Log in
               </Button>
@@ -153,8 +151,8 @@ export default function Navbar() {
 
       {
         <AuthenticationModal
-          isOpen={authModalState}
-          onClose={() => setAuthModalState(false)}
+          isOpen={authModalIsOpen}
+          onClose={() => setAuthModalModalIsOpen(false)}
         />
       }
     </>

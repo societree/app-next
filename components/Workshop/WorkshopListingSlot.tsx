@@ -1,7 +1,7 @@
 import { Box, Button, Text } from "@chakra-ui/react";
 import React from "react";
 import { MdOutlineIosShare } from "react-icons/md";
-import { authenticationModalIsOpen } from "../../shared/recoil/atoms";
+import { authenticationModalState } from "../../shared/recoil/atoms";
 import { Slot } from "../../shared/schemas";
 import { dateToReadable, timeToReadable } from "../../utils/dates";
 import { useSession } from "../../utils/hooks";
@@ -14,7 +14,7 @@ interface IProps {
 
 export default function WorkshopListingSlot({ slot, onJoin }: IProps) {
   const session = useSession();
-  const [_, setAuthModalState] = useRecoilState(authenticationModalIsOpen);
+  const [_, setAuthModalIsOpen] = useRecoilState(authenticationModalState);
 
   return (
     <Box
@@ -52,7 +52,7 @@ export default function WorkshopListingSlot({ slot, onJoin }: IProps) {
             if (session?.user) {
               onJoin();
             } else {
-              setAuthModalState(true);
+              setAuthModalIsOpen(true);
             }
           }}
           size={{ base: "xs", sm: "md" }}
