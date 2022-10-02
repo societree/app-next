@@ -22,6 +22,8 @@ import { useRouter } from "next/router";
 import AuthenticationModal from "../AuthenticationModal";
 import { useSession } from "../../utils/hooks";
 import { auth } from "../../shared/auth/supabase";
+import { authenticationModalIsOpen } from "../../shared/recoil/atoms";
+import { useRecoilState } from "recoil";
 
 const Links = [{ label: "Find workshops", onClick: () => "" }];
 
@@ -45,11 +47,9 @@ export default function Navbar() {
   const router = useRouter();
   const session = useSession();
 
-  const {
-    isOpen: modalIsOpen,
-    onClose: onModalClose,
-    onOpen: onModalOpen,
-  } = useDisclosure();
+  const [authModalState, setAuthModalState] = useRecoilState(
+    authenticationModalIsOpen
+  );
 
   return (
     <>
@@ -87,9 +87,9 @@ export default function Navbar() {
                 size={"sm"}
                 mr={4}
                 color="green.500"
-                onClick={onModalOpen}
+                onClick={() => setAuthModalState(true)}
               >
-                Log in or Sign up
+                Log in
               </Button>
             ) : null}
             {session?.user ? (
@@ -151,7 +151,12 @@ export default function Navbar() {
         ) : null}
       </Box>
 
-      {<AuthenticationModal isOpen={modalIsOpen} onClose={onModalClose} />}
+      {
+        <AuthenticationModal
+          isOpen={authModalState}
+          onClose={() => setAuthModalState(false)}
+        />
+      }
     </>
   );
 }

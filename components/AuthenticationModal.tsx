@@ -15,7 +15,7 @@ interface IProps {
 
 export default function AuthenticationModal({ isOpen, onClose }: IProps) {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="xl">
+    <Modal isOpen={isOpen} onClose={onClose} size={{ base: "full", sm: "xl" }}>
       <ModalOverlay />
       <ModalContent>
         <ModalCloseButton />

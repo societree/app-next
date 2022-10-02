@@ -133,15 +133,17 @@ export default function AuthenticationForm({ onSuccess }: IProps) {
   return (
     <Container
       maxW="lg"
-      py={{ base: "12", md: "8" }}
-      px={{ base: "7", sm: "8" }}
+      py={{ base: "12", sm: "10" }}
+      px={{ base: "0", sm: "8" }}
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing="8">
           <Stack spacing="6">
-            <Logo />
             <Stack spacing={{ base: "2", md: "3" }} textAlign="center">
-              <Heading size={useBreakpointValue({ base: "xs", md: "sm" })}>
+              <Heading
+                size={useBreakpointValue({ base: "xs", md: "sm" })}
+                pt="10"
+              >
                 {mode === Mode.LOGIN
                   ? "Log in to your account"
                   : "Create an account "}
@@ -172,8 +174,8 @@ export default function AuthenticationForm({ onSuccess }: IProps) {
             </Stack>
           </Stack>
           <Box
-            py={{ base: "12", sm: "8" }}
-            px={{ base: "8", sm: "10" }}
+            py={{ base: "4", sm: "8" }}
+            px={{ base: "4", sm: "10" }}
             bg={useBreakpointValue({ base: "white", sm: "white" })}
             boxShadow={{ base: "none" }}
             borderRadius={{ base: "2xl", sm: "xl" }}

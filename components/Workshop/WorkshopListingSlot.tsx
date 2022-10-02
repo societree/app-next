@@ -1,10 +1,11 @@
 import { Box, Button, Text } from "@chakra-ui/react";
-import { useRouter } from "next/router";
 import React from "react";
 import { MdOutlineIosShare } from "react-icons/md";
+import { authenticationModalIsOpen } from "../../shared/recoil/atoms";
 import { Slot } from "../../shared/schemas";
 import { dateToReadable, timeToReadable } from "../../utils/dates";
 import { useSession } from "../../utils/hooks";
+import { useRecoilState } from "recoil";
 
 interface IProps {
   slot: Slot;
@@ -13,6 +14,8 @@ interface IProps {
 
 export default function WorkshopListingSlot({ slot, onJoin }: IProps) {
   const session = useSession();
+  const [_, setAuthModalState] = useRecoilState(authenticationModalIsOpen);
+
   return (
     <Box
       py="5"
@@ -35,22 +38,27 @@ export default function WorkshopListingSlot({ slot, onJoin }: IProps) {
           rightIcon={<MdOutlineIosShare />}
           variant={"outline"}
           onClick={() => onJoin()}
-          size="md"
+          size={{ base: "xs", sm: "md" }}
           mr="3"
         >
           Share
         </Button>
-        {session?.user ? (
-          <Button
-            rounded="full"
-            colorScheme="green"
-            variant={"solid"}
-            onClick={() => onJoin()}
-            size="md"
-          >
-            Attend online
-          </Button>
-        ) : null}
+
+        <Button
+          rounded="full"
+          colorScheme="green"
+          variant={"solid"}
+          onClick={() => {
+            if (session?.user) {
+              onJoin();
+            } else {
+              setAuthModalState(true);
+            }
+          }}
+          size={{ base: "xs", sm: "md" }}
+        >
+          {session?.user ? "Join" : "Log in"}
+        </Button>
       </Box>
     </Box>
   );
