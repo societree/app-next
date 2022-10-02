@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
+import { Button, Flex, Heading, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import LandingHowItWorksCard from "./LandingHowItWorksCard";
 
@@ -6,45 +6,41 @@ export default function LandingHowItWorks() {
   const router = useRouter();
 
   return (
-    <Flex
-      flexDir={"column"}
-      alignItems="center"
-      pt="20"
-      pb={{ base: "10", sm: "0" }}
-      px={{ base: "7", sm: "0" }}
-    >
-      <Heading fontWeight={"bold"} fontSize="30px" pb="3">
+    <Flex flexDir={"column"} alignItems="center">
+      <Heading fontWeight={"bold"} size="lg" pb="3">
         How Shared works
       </Heading>
-      <Text w={{ base: "100%", sm: "470px" }} textAlign="center">
-        Meet new people who share your interests through online and in-person
-        events. It’s free to create an account.
+      <Text
+        w={{ base: "100%", sm: "470px" }}
+        textAlign="center"
+        fontSize={"md"}
+      >
+        Join, host or sponsor community workshops. It’s totally free to create
+        an account and always will be.
       </Text>
+
       <Flex
         flexDir={{ base: "column", sm: "row" }}
-        justifyContent={"space-around"}
+        justifyContent={"space-between"}
+        alignItems="baseline"
         py={{ base: "10", sm: "16" }}
       >
         <LandingHowItWorksCard
-          description="Do what you love, meet others who love it, find your community.
-        The rest is history!"
-          title=" Join a workshop"
-          img="https://secure.meetupstatic.com/next/images/shared/ticket.svg?w=384"
-        />
-        <LandingHowItWorksCard
-          description="Do what you love, meet others who love it, find your community.
-        The rest is history!"
-          title=" Join a workshop"
+          title="Host"
+          description="Volunteers are an integral part of the platform: they're the ones that volunteer their skills and time to the community."
           img="https://secure.meetupstatic.com/next/images/shared/handsUp.svg?w=384"
         />
         <LandingHowItWorksCard
-          description="Do what you love, meet others who love it, find your community.
-        The rest is history!"
-          title=" Join a workshop"
-          img="https://secure.meetupstatic.com/next/images/shared/joinGroup.svg?w=384"
+          title=" Join"
+          description="Users are the main beneficiaries of the platform: they're the ones receiving the support, knowledge and skills, totally free."
+          img="https://secure.meetupstatic.com/next/images/shared/handsUp.svg?w=384"
+        />
+        <LandingHowItWorksCard
+          title="Sponsor"
+          description="Sponsors are community members and companies that support the work of volunteers through regular monthly donations of as little as £1."
+          img="https://secure.meetupstatic.com/next/images/shared/handsUp.svg?w=384"
         />
       </Flex>
-
       <Button onClick={() => router.push("/workshops")} colorScheme={"green"}>
         Find workshops
       </Button>

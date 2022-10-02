@@ -5,9 +5,7 @@ import { BookingDetails, Workshop } from "../../shared/schemas";
 import { data } from "../../shared/data/supabase";
 import { auth } from "../../shared/auth/supabase";
 import BookingList from "../../components/Booking/BookingList";
-import WorkshopList from "../../components/Workshop/WorkshopList";
-import { Box, Flex, Heading, Text } from "@chakra-ui/react";
-import ResponsiveContainer from "../../components/Layout/ResponsiveContainer";
+import { Box } from "@chakra-ui/react";
 
 export default function MyBookingsPage({
   workshops,
@@ -19,9 +17,9 @@ export default function MyBookingsPage({
 }) {
   return (
     <Layout>
-      <ResponsiveContainer>
+      <Box>
         <BookingList bookings={bookings} />
-      </ResponsiveContainer>
+      </Box>
     </Layout>
   );
 }

@@ -1,7 +1,6 @@
-import { Stack } from "@chakra-ui/react";
+import { Box, Stack } from "@chakra-ui/react";
 import React from "react";
 import { Workshop } from "../../shared/schemas";
-import ResponsiveContainer from "../Layout/ResponsiveContainer";
 import WorkshopCard from "./WorkshopListCard";
 import WorkshopListFilter from "./WorkshopListFilter";
 
@@ -12,7 +11,7 @@ interface IProps {
 
 export default function WorkshopList({ workshops, hideFilter }: IProps) {
   return (
-    <ResponsiveContainer>
+    <Box>
       {!hideFilter ? (
         <WorkshopListFilter onFilterChange={(data) => console.log(data)} />
       ) : null}
@@ -21,6 +20,6 @@ export default function WorkshopList({ workshops, hideFilter }: IProps) {
           <WorkshopCard key={w.id} workshop={w} />
         ))}
       </Stack>
-    </ResponsiveContainer>
+    </Box>
   );
 }

@@ -2,6 +2,7 @@ import { Box } from "@chakra-ui/react";
 import React, { ReactNode } from "react";
 import Footer from "../Footer";
 import Navbar from "./Navbar";
+import ResponsiveContainer from "./ResponsiveContainer";
 
 type LayoutProps = {
   children: ReactNode;
@@ -17,7 +18,7 @@ export default function Layout(props: LayoutProps) {
     >
       <Box>
         <Navbar />
-        <Box p={{ base: "2", md: "0" }}>{props.children}</Box>
+        <ResponsiveContainer>{props.children}</ResponsiveContainer>
       </Box>
       <Footer />
     </Box>

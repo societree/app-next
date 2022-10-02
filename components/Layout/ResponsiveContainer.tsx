@@ -8,9 +8,8 @@ interface IProps {
 export default function ResponsiveContainer({ children }: IProps) {
   return (
     <Container
-      maxW={{ base: "100vw", sm: "89vw" }}
-      py={{ base: "0", sm: "10" }}
-      px={{ base: "0", sm: "20" }}
+      maxW={{ base: "100vw", sm: "94vw" }}
+      py={{ base: "7", sm: "14" }}
     >
       {children}
     </Container>
