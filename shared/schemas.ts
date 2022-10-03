@@ -18,9 +18,10 @@ export interface Workshop {
   user_id: string;
   description: string;
   category: string;
-  house: string;
-  street: string;
-  postcode: string;
+  house?: string;
+  street?: string;
+  postcode?: string;
+  city?: string;
   virtual: boolean;
 }
 

@@ -167,6 +167,18 @@ export default function WorkshopForm(): JSX.Element {
                     {errors.postcode && errors.postcode.message}
                   </FormErrorMessage>
                 </FormControl>
+
+                <FormControl>
+                  <Input
+                    {...register("city", {
+                      required: "This is required",
+                    })}
+                    placeholder="Bristol"
+                  />
+                  <FormErrorMessage>
+                    {errors.city && errors.city.message}
+                  </FormErrorMessage>
+                </FormControl>
               </>
             ) : null}
 
