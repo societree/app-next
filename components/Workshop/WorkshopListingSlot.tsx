@@ -57,7 +57,7 @@ export default function WorkshopListingSlot({ slot, onJoin }: IProps) {
           }}
           size={{ base: "xs", sm: "md" }}
         >
-          {session?.user ? "Join" : "Log in"}
+          Join
         </Button>
       </Box>
     </Box>
