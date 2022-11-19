@@ -18,10 +18,10 @@ export default function LandingHeading() {
         </Heading>
         <Text fontSize={"md"} pb={{ base: "5", sm: "0" }}>
           Totally <b>transparent</b>, directly <b>democratic</b>, and
-          <b> free</b> to use, Share will enable you to help your community,
+          <b> free</b> to use, Societree will enable you to help your community,
           build your reputation and learn some brand new skills! Built on a
           commitment to the idea that social exchange has real material value,
-          Share is a social experiment platform that challenges the conventional
+          Societree is a social experiment platform that challenges the conventional
           capitalist business structures.
         </Text>
       </Box>
