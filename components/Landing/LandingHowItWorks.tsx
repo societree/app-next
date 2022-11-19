@@ -8,7 +8,7 @@ export default function LandingHowItWorks() {
   return (
     <Flex flexDir={"column"} alignItems="center">
       <Heading fontWeight={"bold"} size="lg" pb="3">
-        How Shared works
+        How Societree works
       </Heading>
       <Text
         w={{ base: "100%", sm: "470px" }}

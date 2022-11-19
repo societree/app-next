@@ -2,16 +2,17 @@ import { Box, HStack, Stack, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { data } from "../../shared/data/supabase";
-import { Slot, Workshop } from "../../shared/schemas";
+import { Booking, Slot, Workshop } from "../../shared/schemas";
 import { useSession } from "../../utils/hooks";
 import WorkshopListingSlot from "./WorkshopListingSlot";
 
 interface IProps {
   workshop: Workshop;
   slots: Slot[];
+  bookings: Booking[];
 }
 
-export default function WorkshopListingSlotList({ slots, workshop }: IProps) {
+export default function WorkshopListingSlotList({ slots, workshop, bookings }: IProps) {
   const router = useRouter();
 
   const session = useSession();
@@ -51,12 +52,17 @@ export default function WorkshopListingSlotList({ slots, workshop }: IProps) {
     }
   }
 
+  const getActiveBookingsForSlot = (slot: Slot): Booking[] => {
+    return bookings.filter((b) => b.slot_id === slot.id);
+  };
+
   return (
     <Stack>
       {slots.map((slot) => (
         <WorkshopListingSlot
           key={slot.id}
           slot={slot}
+          slotBookings={getActiveBookingsForSlot(slot)}
           onJoin={() => confirmBooking(slot)}
         />
       ))}

@@ -19,7 +19,7 @@ export default function Wid({
 }) {
   return (
     <Layout>
-      <WorkshopListing workshop={workshop} slots={slots} />
+      <WorkshopListing workshop={workshop} slots={slots} bookings={bookings} />
     </Layout>
   );
 }

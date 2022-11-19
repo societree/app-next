@@ -1,20 +1,24 @@
-import { Box, Button, Text } from "@chakra-ui/react";
+import { Box, Button, Text, Badge } from "@chakra-ui/react";
 import React from "react";
 import { MdOutlineIosShare } from "react-icons/md";
 import { authenticationModalState } from "../../shared/recoil/atoms";
-import { Slot } from "../../shared/schemas";
+import { Booking, Slot } from "../../shared/schemas";
 import { dateToReadable, timeToReadable } from "../../utils/dates";
 import { useSession } from "../../utils/hooks";
 import { useRecoilState } from "recoil";
+import { data } from "../../shared/data/supabase"
 
 interface IProps {
   slot: Slot;
+  slotBookings: Booking[];
   onJoin(): void;
 }
 
-export default function WorkshopListingSlot({ slot, onJoin }: IProps) {
+export default function WorkshopListingSlot({ slot, slotBookings, onJoin }: IProps) {
   const session = useSession();
   const [_, setAuthModalIsOpen] = useRecoilState(authenticationModalState);
+  const availableSpaces = slot.capacity - slotBookings.length
+  const availableSpacesMessage = `${availableSpaces} ${availableSpaces == 1 ? "space" : "spaces"} available`
 
   return (
     <Box
@@ -30,6 +34,9 @@ export default function WorkshopListingSlot({ slot, onJoin }: IProps) {
         <Text fontWeight={"bold"}>
           {timeToReadable(slot.start_time, slot.end_time)}
         </Text>
+        <Badge variant={"subtle"} colorScheme="green">
+          {availableSpacesMessage}
+        </Badge>
       </Box>
       <Box>
         <Button

@@ -14,7 +14,7 @@ export default function LandingHeading() {
           lineHeight={{ base: "35px", sm: "50px" }}
           pb={{ base: "5", sm: "5" }}
         >
-          Shared is a knowledge-sharing platform with a difference.
+          Societree is a knowledge-sharing platform with a difference.
         </Heading>
         <Text fontSize={"md"} pb={{ base: "5", sm: "0" }}>
           Totally <b>transparent</b>, directly <b>democratic</b>, and
