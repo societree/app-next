@@ -52,7 +52,7 @@ export default function WorkshopCard({ workshop }: { workshop: Workshop }) {
               {workshop.description}
             </Text>
           </Box>
-          <Box
+          {/* <Box
             justifyContent="space-between"
             pr={10}
             color={"gray.500"}
@@ -62,7 +62,7 @@ export default function WorkshopCard({ workshop }: { workshop: Workshop }) {
             <Text fontSize={"14px"} fontWeight="medium">
               4 spaces available
             </Text>
-          </Box>
+          </Box> */}
         </Box>
       </Box>
     </Box>
