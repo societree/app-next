@@ -35,7 +35,7 @@ export default function WorkshopListFilter({
 
   return (
     <Flex flexDir={"column"} alignItems="center" justifyContent={"center"}>
-      <Center mb="12" pl="60">
+      <Center mb="12" pl={{ base: "0", sm: "60" }}>
         <Input
           border={"none"}
           bg="transparent"
@@ -45,7 +45,7 @@ export default function WorkshopListFilter({
           _placeholder={{ color: "black" }}
           fontWeight="semibold"
           p="10"
-          fontSize="6xl"
+          fontSize={{ base: "4xl", sm: "6xl" }}
           borderWidth={"1px"}
           borderColor={"black"}
           _hover={{

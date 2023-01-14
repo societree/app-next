@@ -7,7 +7,7 @@ export default function Workshops() {
 
   const listenScrollEvent = (e: any) => {
     if (window.scrollY > 1000) {
-      setBg("blue.50");
+      setBg("pink.50");
     } else {
       setBg("gray.50");
     }

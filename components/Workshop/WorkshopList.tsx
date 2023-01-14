@@ -39,10 +39,6 @@ export default function WorkshopList({ hideFilter }: IProps) {
     workshopsActions.execute();
   }, [filter, workshopsActions, page]);
 
-  function scroll() {
-    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-  }
-
   const filterActive = () => {
     return Boolean(
       filter.category || filter.time !== TimeFilter.ANY_TIME || filter.text
@@ -57,7 +53,7 @@ export default function WorkshopList({ hideFilter }: IProps) {
   };
   return (
     <Box>
-      <Container maxW={"container.md"} my="20">
+      <Container maxW={"container.md"} my="20" minH={"100vh"}>
         {!hideFilter ? (
           <WorkshopListFilter
             activeFilter={filter}
@@ -65,7 +61,7 @@ export default function WorkshopList({ hideFilter }: IProps) {
           />
         ) : null}
 
-        <Center my="12">
+        <Center my="12" display={{ base: "none", sm: "flex" }}>
           <Text
             fontWeight={"normal"}
             fontSize={"2xl"}
@@ -76,7 +72,7 @@ export default function WorkshopList({ hideFilter }: IProps) {
               {workshops.result?.workshops.length}
             </strong>
             workshops in
-            <strong style={{ paddingLeft: "5px", paddingRight: "5px" }}>
+            <strong style={{ paddingLeft: "5px" }}>
               {filter.category || "all categories"}
             </strong>
             {filter.category !== "" && (
@@ -97,9 +93,9 @@ export default function WorkshopList({ hideFilter }: IProps) {
                 }
               />
             )}
-            at
+            ,
             <strong style={{ paddingLeft: "5px", paddingRight: "5px" }}>
-              {filter.time.toLowerCase()}
+              {filter.time.toLowerCase()}.
             </strong>
             {filter.time !== TimeFilter.ANY_TIME && (
               <IoMdCloseCircle
@@ -138,11 +134,27 @@ export default function WorkshopList({ hideFilter }: IProps) {
           </Text>
         </Center>
 
-        <Stack spacing={2}>
+        <Stack spacing={2} mt="10">
           {workshops.result?.workshops.map((w) => (
             <WorkshopCard key={w.id} workshop={w} />
           ))}
         </Stack>
+
+        {!workshops.result?.workshops.length &&
+        workshops.status === "success" ? (
+          <Center mt="40">
+            <Heading
+              size="lg"
+              p="10"
+              fontWeight={"normal"}
+              textAlign={"center"}
+            >
+              Wow, this is awkward... We don’t have any workshops that match
+              your search right now. Why not change things up a bit and try
+              removing some filters?
+            </Heading>
+          </Center>
+        ) : null}
       </Container>
 
       {workshops.status === "loading" ? (
@@ -189,22 +201,6 @@ export default function WorkshopList({ hideFilter }: IProps) {
           </Center>
         </Box>
       )}
-
-      {!workshops.result?.workshops.length && workshops.status === "success" ? (
-        <Center py="28">
-          <Heading
-            size="lg"
-            fontWeight={"light"}
-            textAlign={"center"}
-            w="60%"
-            pb="2"
-          >
-            Wow, this is awkward... We don’t have any workshops that match your
-            search right now. Why not change things up a bit and try removing
-            some filters?
-          </Heading>
-        </Center>
-      ) : null}
 
       <Box bg="blue.800" color={"white"} py="20">
         <Center mb="10">
