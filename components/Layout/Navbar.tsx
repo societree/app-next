@@ -69,10 +69,11 @@ export default function Navbar() {
           </HStack>
 
           <Flex alignItems={"center"}>
-            {!session?.user ? (
+            {!session?.user && !isLanding ? (
               <Button
                 variant={"text"}
                 size={"sm"}
+                color={isLanding ? "white" : "black"}
                 onClick={() => setAuthModalState({ open: true, signUp: false })}
               >
                 Log in
@@ -83,6 +84,7 @@ export default function Navbar() {
               <Button
                 variant={"text"}
                 size={"sm"}
+                color={isLanding ? "white" : "black"}
                 onClick={() => setAuthModalState({ open: true, signUp: true })}
               >
                 Sign up
