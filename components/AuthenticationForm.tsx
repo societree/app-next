@@ -19,7 +19,7 @@ import * as React from "react";
 import { ReactElement } from "react";
 import { useForm } from "react-hook-form";
 import { OAuthButtonGroup } from "./0AuthButtonGroup";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { auth } from "../shared/auth/supabase";
 import { data } from "../shared/data/supabase";
 import { authenticationModalState } from "@/shared/recoil/atoms";
