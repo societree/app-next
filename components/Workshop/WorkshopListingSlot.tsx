@@ -1,12 +1,11 @@
-import { Box, Button, Text, Badge } from "@chakra-ui/react";
+import { Box, Button, Text, Flex } from "@chakra-ui/react";
 import React from "react";
-import { MdOutlineIosShare } from "react-icons/md";
 import { authenticationModalState } from "../../shared/recoil/atoms";
 import { Booking, Slot } from "../../shared/schemas";
 import { dateToReadable, timeToReadable } from "../../utils/dates";
 import { useSession } from "../../utils/hooks";
 import { useRecoilState } from "recoil";
-import { data } from "../../shared/data/supabase"
+import { pluralize } from "@/utils/strings";
 
 interface IProps {
   slot: Slot;
@@ -14,59 +13,73 @@ interface IProps {
   onJoin(): void;
 }
 
-export default function WorkshopListingSlot({ slot, slotBookings, onJoin }: IProps) {
+export default function WorkshopListingSlot({
+  slot,
+  slotBookings,
+  onJoin,
+}: IProps) {
   const session = useSession();
-  const [_, setAuthModalIsOpen] = useRecoilState(authenticationModalState);
-  const availableSpaces = slot.capacity - slotBookings.length
-  const availableSpacesMessage = `${availableSpaces} ${availableSpaces == 1 ? "space" : "spaces"} available`
+  const [_, setAuthModalState] = useRecoilState(authenticationModalState);
+  const availableSpaces = slot.capacity - slotBookings.length;
+  const availableSpacesMessage = `${pluralize(
+    availableSpaces,
+    "space",
+    "s"
+  )} available`;
 
   return (
-    <Box
-      py="5"
-      px={{ base: "2", md: "10" }}
-      borderTop={"1px"}
-      borderTopColor="gray.200"
-      display="flex"
+    <Flex
+      py="7"
+      px={{ base: "5", md: "10" }}
       justifyContent={"space-between"}
+      bg="white"
+      rounded={"lg"}
+      alignItems="center"
+      border={"1px solid black"}
     >
-      <Box fontSize={"sm"}>
+      <Box>
         <Text>{dateToReadable(slot.date)}</Text>
-        <Text fontWeight={"bold"}>
-          {timeToReadable(slot.start_time, slot.end_time)}
-        </Text>
-        <Badge variant={"subtle"} colorScheme="green">
+        <Text mb="3">{timeToReadable(slot.start_time, slot.end_time)}</Text>
+
+        <Flex
+          fontSize={"xs"}
+          px="2"
+          py="1"
+          border={"1px solid black"}
+          w="fit-content"
+          rounded={"full"}
+          mr="1"
+          bg="black"
+          color="white"
+        >
           {availableSpacesMessage}
-        </Badge>
+        </Flex>
       </Box>
       <Box>
         <Button
-          rounded="full"
-          colorScheme="green"
-          rightIcon={<MdOutlineIosShare />}
-          variant={"outline"}
-          onClick={() => onJoin()}
-          size={{ base: "xs", sm: "md" }}
-          mr="3"
-        >
-          Share
-        </Button>
-
-        <Button
-          rounded="full"
-          colorScheme="green"
-          variant={"solid"}
+          color={"white"}
+          bg="black"
+          rounded={"full"}
+          border={"1px solid transparent"}
+          px="4"
+          py="3"
+          fontWeight={"light"}
+          _hover={{
+            bg: "transparent",
+            color: "black",
+            border: "1px solid black",
+          }}
           onClick={() => {
             if (session?.user) {
               onJoin();
             } else {
-              setAuthModalIsOpen(true);
+              setAuthModalState({ open: true, signUp: false });
             }
           }}
-          size={{ base: "xs", sm: "md" }}
         >
           Join
         </Button>
       </Box>
-    </Box>
+    </Flex>
   );
 }

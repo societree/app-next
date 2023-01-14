@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Box,
   Button,
@@ -17,9 +19,11 @@ import * as React from "react";
 import { ReactElement } from "react";
 import { useForm } from "react-hook-form";
 import { OAuthButtonGroup } from "./0AuthButtonGroup";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { auth } from "../shared/auth/supabase";
 import { data } from "../shared/data/supabase";
+import { authenticationModalState } from "@/shared/recoil/atoms";
+import { useRecoilState } from "recoil";
 
 interface IProps {
   onSuccess(): void;
@@ -31,10 +35,14 @@ enum Mode {
 }
 
 export default function AuthenticationForm({ onSuccess }: IProps) {
+  const [authModalState] = useRecoilState(authenticationModalState);
+
   const { register, handleSubmit } = useForm();
   const [isLoading, setIsLoading] = React.useState(false);
   const router = useRouter();
-  const [mode, setMode] = React.useState<Mode>(Mode.LOGIN);
+  const [mode, setMode] = React.useState<Mode>(
+    authModalState.signUp ? Mode.SIGNUP : Mode.LOGIN
+  );
   const toast = useToast();
 
   /**
@@ -136,10 +144,6 @@ export default function AuthenticationForm({ onSuccess }: IProps) {
       </FormControl>
     );
   };
-
-  function renderForm() {
-    return;
-  }
 
   return (
     <Container

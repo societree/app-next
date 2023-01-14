@@ -10,6 +10,8 @@ export default function ResponsiveContainer({ children }: IProps) {
     <Container
       maxW={{ base: "100vw", sm: "94vw" }}
       py={{ base: "7", sm: "14" }}
+      w="100%"
+      minH={"100vh"}
     >
       {children}
     </Container>

@@ -13,14 +13,20 @@ export default function WorkshopFormSlot({ slot, onRemoveSlot }: IProps) {
   return (
     <Flex
       justifyContent={"space-between"}
-      borderBottomWidth="thin"
-      borderBottomColor="gray.100"
+      border="1px solid black"
       mb="3"
-      pb="3"
       alignItems={"center"}
+      px="5"
+      py="5"
+      rounded={"lg"}
     >
       <Box>
-        <Text display={"flex"} alignItems="center" fontWeight={"semibold"}>
+        <Text
+          display={"flex"}
+          alignItems="center"
+          fontWeight={"semibold"}
+          fontSize="sm"
+        >
           <CalendarIcon pr="1.5" />
           {dateToReadable(slot.date)}
         </Text>
@@ -34,8 +40,21 @@ export default function WorkshopFormSlot({ slot, onRemoveSlot }: IProps) {
         </Text>
       </Box>
       <Tooltip label="Remove">
-        <Button size={"sm"} onClick={() => onRemoveSlot(slot.id)}>
-          x
+        <Button
+          size={"sm"}
+          onClick={() => onRemoveSlot(slot.id)}
+          color={"black"}
+          rounded={"full"}
+          bg="white"
+          border={"1px solid black"}
+          fontWeight={"light"}
+          _hover={{
+            bg: "transparent",
+            color: "black",
+            border: "1px solid black",
+          }}
+        >
+          Remove
         </Button>
       </Tooltip>
     </Flex>

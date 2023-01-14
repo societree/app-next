@@ -46,13 +46,32 @@ export interface Slot {
 }
 
 export interface User {
-  id: string
-  email?: string
-  phone?: string
+  id: string;
+  email?: string;
+  phone?: string;
 }
 
 export interface Session {
-  provider_token?: string | null
-  access_token: string
-  user: User | null
+  provider_token?: string | null;
+  access_token: string;
+  user: User | null;
 }
+
+export interface FilterProps {
+  text: string;
+  category: string;
+  time: TimeFilter;
+}
+
+export enum TimeFilter {
+  ANY_TIME = "Any time",
+  THIS_WEEK = "This week",
+  THIS_WEEKEND = "This weekend",
+  NEXT_WEEK = "Next week",
+}
+
+export const DefaultFilterProps: FilterProps = {
+  text: "",
+  category: "",
+  time: TimeFilter.ANY_TIME,
+};

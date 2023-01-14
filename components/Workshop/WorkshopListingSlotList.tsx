@@ -12,7 +12,11 @@ interface IProps {
   bookings: Booking[];
 }
 
-export default function WorkshopListingSlotList({ slots, workshop, bookings }: IProps) {
+export default function WorkshopListingSlotList({
+  slots,
+  workshop,
+  bookings,
+}: IProps) {
   const router = useRouter();
 
   const session = useSession();
@@ -34,7 +38,7 @@ export default function WorkshopListingSlotList({ slots, workshop, bookings }: I
 
         // Redirect if booking created successfully
         if (success) {
-          router.push("/me/dashboard");
+          router.push("/dashboard");
         }
       }
     } catch (error) {
@@ -57,7 +61,7 @@ export default function WorkshopListingSlotList({ slots, workshop, bookings }: I
   };
 
   return (
-    <Stack>
+    <Stack mt="2">
       {slots.map((slot) => (
         <WorkshopListingSlot
           key={slot.id}

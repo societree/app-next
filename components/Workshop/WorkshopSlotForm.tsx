@@ -68,6 +68,8 @@ export default function WorkshopSlotForm({
               required: "This is required",
               minLength: { value: 4, message: "Minimum length should be 4" },
             })}
+            borderColor={"black"}
+            focusBorderColor="black"
           />
           <FormErrorMessage>
             {errors.date && errors.date.message}
@@ -85,6 +87,8 @@ export default function WorkshopSlotForm({
             {...register("capacity", {
               required: "This is required",
             })}
+            borderColor={"black"}
+            focusBorderColor="black"
           />
           <FormErrorMessage>
             {errors.capacity && errors.capacity.message}
@@ -103,6 +107,8 @@ export default function WorkshopSlotForm({
               required: "This is required",
               minLength: { value: 4, message: "Minimum length should be 4" },
             })}
+            borderColor={"black"}
+            focusBorderColor="black"
           />
           <FormErrorMessage>
             {errors.startTime && errors.startTime.message}
@@ -121,6 +127,8 @@ export default function WorkshopSlotForm({
               required: "This is required",
               minLength: { value: 4, message: "Minimum length should be 4" },
             })}
+            borderColor={"black"}
+            focusBorderColor="black"
           />
           <FormErrorMessage>
             {errors.endTime && errors.endTime.message}
@@ -129,11 +137,20 @@ export default function WorkshopSlotForm({
 
         <Flex justifyContent={"right"}>
           <Button
-            colorScheme={"green"}
-            variant={!hasSlots ? "solid" : "outline"}
             type="submit"
             leftIcon={<AddIcon />}
             isLoading={isSubmitting}
+            color={"black"}
+            bg="transparent"
+            rounded={"full"}
+            border={"1px solid black"}
+            px="4"
+            py="3"
+            fontWeight={"light"}
+            _hover={{
+              bg: "black",
+              color: "white",
+            }}
           >
             Add
           </Button>

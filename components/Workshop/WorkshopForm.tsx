@@ -133,6 +133,8 @@ export default function WorkshopForm(): JSX.Element {
           })}
           placeholder="My Workshop"
           autoFocus={true}
+          borderColor={"black"}
+          focusBorderColor="black"
         />
         <FormErrorMessage>
           {errors.name && errors.name.message}
@@ -146,6 +148,8 @@ export default function WorkshopForm(): JSX.Element {
           {...register("category", {
             required: "This is required",
           })}
+          borderColor={"black"}
+          focusBorderColor="black"
         >
           {config.categories.map((category) => {
             return (
@@ -168,6 +172,8 @@ export default function WorkshopForm(): JSX.Element {
             required: "This is required",
           })}
           placeholder="It's a workshop"
+          borderColor={"black"}
+          focusBorderColor="black"
         />
         <FormErrorMessage>
           {errors.description && errors.description.message}
@@ -197,11 +203,18 @@ export default function WorkshopForm(): JSX.Element {
           <Text mr={2}>Virtual?</Text>
           <Switch
             id="isVirtual"
-            colorScheme={"green"}
+            colorScheme={"blue"}
             {...register("virtual")}
           />
         </Flex>
       </FormControl>
+
+      <Show showIf={formState.virtual}>
+        <Text pt="4" color="gray.700">
+          This is a virtual workshop with no associated address. Press Next if
+          that is correct.
+        </Text>
+      </Show>
 
       <Show showIf={!formState.virtual}>
         <FormControl>
@@ -210,6 +223,8 @@ export default function WorkshopForm(): JSX.Element {
               required: "This is required",
             })}
             placeholder="8 Community House"
+            borderColor={"black"}
+            focusBorderColor="black"
           />
           <FormErrorMessage>
             {errors.house && errors.house.message}
@@ -222,6 +237,8 @@ export default function WorkshopForm(): JSX.Element {
               required: "This is required",
             })}
             placeholder="Bristol Road"
+            borderColor={"black"}
+            focusBorderColor="black"
           />
           <FormErrorMessage>
             {errors.street && errors.street.message}
@@ -234,6 +251,8 @@ export default function WorkshopForm(): JSX.Element {
               required: "This is required",
             })}
             placeholder="BS1 3SQ"
+            borderColor={"black"}
+            focusBorderColor="black"
           />
           <FormErrorMessage>
             {errors.postcode && errors.postcode.message}
@@ -246,6 +265,8 @@ export default function WorkshopForm(): JSX.Element {
               required: "This is required",
             })}
             placeholder="Bristol"
+            borderColor={"black"}
+            focusBorderColor="black"
           />
           <FormErrorMessage>
             {errors.city && errors.city.message}
@@ -259,14 +280,25 @@ export default function WorkshopForm(): JSX.Element {
    * Date stage step of form
    */
   const dateStage = (
-    <Stack spacing={4}>
+    <Flex justifyContent={"space-around"} w="full" flexDir={"column"}>
       <WorkshopSlotForm
         hasSlots={slots.length !== 0}
         onSubmit={(data) => {
           setSlots((old) => [...old, data]);
         }}
       />
-    </Stack>
+      <Flex flexDir={"column"} py="5">
+        {slots.map((s) => (
+          <WorkshopFormSlot
+            key={s.id}
+            slot={s}
+            onRemoveSlot={(id) =>
+              setSlots((prev) => prev.filter((s) => s.id !== id))
+            }
+          />
+        ))}
+      </Flex>
+    </Flex>
   );
 
   const FORM_STEPS = [
@@ -279,69 +311,60 @@ export default function WorkshopForm(): JSX.Element {
   const isFinalStage = activeStep === FORM_STEPS.length - 1;
 
   return (
-    <Flex flexDir={{ base: "column", sm: "row" }}>
-      <Box minW={{ base: "", sm: "50vw" }}>
-        <Heading mb={{ base: "7", sm: "12" }}>Create</Heading>
-        <Flex flexDir="column" width="100%">
-          <Steps activeStep={activeStep}>
-            {FORM_STEPS.map(({ label, content }) => (
-              <Step label={label} key={label}>
-                <Box my={{ base: "4", sm: "12" }}>{content}</Box>
-              </Step>
-            ))}
-          </Steps>
-          <Flex width="100%" justify="flex-end">
-            <Button
-              isDisabled={activeStep === 0}
-              mr={4}
-              onClick={prevStep}
-              variant="ghost"
-            >
-              Prev
-            </Button>
-            <Button
-              isLoading={isLoading}
-              isDisabled={nextStepIsDisabled()}
-              colorScheme={isFinalStage ? "green" : "gray"}
-              onClick={() => {
-                if (isFinalStage) {
-                  onSubmit(formState);
-                } else {
-                  nextStep();
-                }
-              }}
-            >
-              {isFinalStage ? "Finish" : "Next"}
-            </Button>
-          </Flex>
-        </Flex>
-      </Box>
-      <Box pt={{ base: "10", sm: "0" }} pl={{ base: "0", sm: "10" }}>
-        <Show showIf={slots.length !== 0}>
-          <Box
-            borderColor={"gray.100"}
-            rounded="lg"
-            borderWidth={"thin"}
-            px={{ base: "7", sm: "10" }}
-            py={{ base: "10", sm: "14" }}
-            minW={{ base: "", sm: "600px" }}
-            boxShadow="lg"
-            mt="20"
-          >
-            <Stack spacing={2}>
-              {slots.map((slot) => (
-                <WorkshopFormSlot
-                  key={slot.id}
-                  slot={slot}
-                  onRemoveSlot={(id: string) =>
-                    setSlots((prev) => prev.filter((s) => s.id !== id))
-                  }
-                />
-              ))}
-            </Stack>
-          </Box>
-        </Show>
-      </Box>
+    <Flex flexDir="column">
+      <Steps hidden colorScheme={"gray"} activeStep={activeStep}>
+        {FORM_STEPS.map(({ label, content }) => (
+          <Step label={label} key={label}>
+            <Box my={{ base: "4", sm: "12" }}>{content}</Box>
+          </Step>
+        ))}
+      </Steps>
+      <Flex width="100%" justify="flex-end">
+        <Button
+          isDisabled={activeStep === 0}
+          mr={4}
+          onClick={prevStep}
+          color={"black"}
+          rounded={"full"}
+          bg="transparent"
+          border={"1px solid transparent"}
+          px="4"
+          py="3"
+          fontWeight={"light"}
+          _hover={{
+            bg: "transparent",
+            color: "black",
+            border: "1px solid black",
+          }}
+        >
+          Prev
+        </Button>
+        <Button
+          isLoading={isLoading}
+          isDisabled={nextStepIsDisabled()}
+          onClick={() => {
+            if (isFinalStage) {
+              onSubmit(formState);
+            } else {
+              nextStep();
+            }
+          }}
+          color={"white"}
+          bg="black"
+          rounded={"full"}
+          border={"1px solid transparent"}
+          px="4"
+          py="3"
+          fontWeight={"light"}
+          _hover={{
+            bg: "transparent",
+            color: "black",
+            border: "1px solid black",
+          }}
+        >
+          {isFinalStage ? "Finish" : "Next"}
+        </Button>
+      </Flex>
     </Flex>
   );
 }

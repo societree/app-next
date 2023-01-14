@@ -1,37 +1,78 @@
-import { Box, HStack, Input, Select } from "@chakra-ui/react";
+import { Center, Flex, HStack, Input, Select } from "@chakra-ui/react";
 import { capitalize } from "lodash";
 import React from "react";
 import { useForm } from "react-hook-form";
 import config from "../../app-config";
+import {
+  FilterProps,
+  DefaultFilterProps,
+  TimeFilter,
+} from "../../shared/schemas";
 
 interface IProps {
-  onFilterChange(filter: any): void;
+  activeFilter: FilterProps;
+  onFilterChange(filter: FilterProps): void;
 }
 
-export default function WorkshopListFilter({ onFilterChange }: IProps) {
-  const { register, watch } = useForm();
-
-  const filterState = watch();
+export default function WorkshopListFilter({
+  onFilterChange,
+  activeFilter,
+}: IProps) {
+  const { register, watch } = useForm<FilterProps>({
+    defaultValues: DefaultFilterProps,
+  });
 
   React.useEffect(() => {
-    onFilterChange(filterState);
+    const subscription = watch((data) => {
+      onFilterChange(data as FilterProps);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterState]);
+  }, [watch]);
 
   return (
-    <Box pb="7" display={{ base: "none", md: "block" }} w="800px">
-      <HStack spacing={1}>
+    <Flex flexDir={"column"} alignItems="center" justifyContent={"center"}>
+      <Center mb="12" pl="60">
         <Input
-          rounded={"full"}
-          placeholder="Search for keywords"
-          type={"search"}
-          {...register("search")}
+          border={"none"}
+          bg="transparent"
+          placeholder="Search"
+          color={"black"}
+          autoFocus={true}
+          _placeholder={{ color: "black" }}
+          fontWeight="semibold"
+          p="10"
+          fontSize="6xl"
+          borderWidth={"1px"}
+          borderColor={"black"}
+          _hover={{
+            borderWidth: "0px",
+            borderColor: "transparent",
+            cursor: "pointer",
+          }}
+          focusBorderColor="transparent"
+          {...register("text")}
         />
+      </Center>
+      <HStack spacing={2}>
         <Select
           rounded={"full"}
+          placeholder="All Categories"
           fontWeight={"semibold"}
-          placeholder="Category"
-          bg="gray.100"
+          bg={activeFilter.category ? "black" : "transparent"}
+          color={activeFilter.category ? "white" : "black"}
+          h="12"
+          borderWidth={"1px"}
+          borderColor={"black"}
+          boxShadow={"sm"}
+          _hover={{
+            borderWidth: "1px",
+            borderColor: "black",
+            cursor: "pointer",
+          }}
           {...register("category")}
         >
           {config.categories.map((c) => (
@@ -40,18 +81,32 @@ export default function WorkshopListFilter({ onFilterChange }: IProps) {
             </option>
           ))}
         </Select>
+
         <Select
-          fontWeight={"semibold"}
           rounded={"full"}
-          bg="gray.100"
+          fontWeight={"semibold"}
+          bg={
+            activeFilter.time === TimeFilter.ANY_TIME ? "transparent" : "black"
+          }
+          color={activeFilter.time === TimeFilter.ANY_TIME ? "black" : "white"}
+          h="12"
+          _hover={{
+            borderWidth: "1px",
+            borderColor: "black",
+            cursor: "pointer",
+          }}
+          borderWidth={"1px"}
+          borderColor={"black"}
+          boxShadow={"sm"}
           {...register("time")}
         >
-          <option>Any day</option>
-          <option>Tomorrow</option>
-          <option>This weekend</option>
-          <option>Next week</option>
+          {config.timeFilters.map((c) => (
+            <option key={c} value={c}>
+              {c}
+            </option>
+          ))}
         </Select>
       </HStack>
-    </Box>
+    </Flex>
   );
 }

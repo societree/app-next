@@ -1,10 +1,8 @@
-import { ReactNode } from "react";
 import {
   Box,
   Flex,
   Avatar,
   HStack,
-  Link,
   IconButton,
   Button,
   Menu,
@@ -12,48 +10,44 @@ import {
   MenuList,
   MenuItem,
   useDisclosure,
-  useColorModeValue,
   Stack,
-  Img,
   Divider,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import { useRouter } from "next/router";
 import AuthenticationModal from "../AuthenticationModal";
 import { useSession } from "../../utils/hooks";
 import { auth } from "../../shared/auth/supabase";
 import { authenticationModalState } from "../../shared/recoil/atoms";
 import { useRecoilState } from "recoil";
 
-const Links = [{ label: "Find workshops", onClick: () => "" }];
+import { GiTreeDoor } from "react-icons/gi";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
-const NavLink = ({ children }: { children: ReactNode }) => (
-  <Link
-    px={2}
-    py={1}
-    rounded={"md"}
-    _hover={{
-      textDecoration: "none",
-      bg: useColorModeValue("gray.200", "gray.700"),
-    }}
-    href={"/workshops"}
-  >
-    {children}
-  </Link>
-);
+const Links = [{ label: "Find workshops", href: "/workshops" }];
 
 export default function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
+
   const session = useSession();
 
-  const [authModalIsOpen, setAuthModalModalIsOpen] = useRecoilState(
+  const [authModalState, setAuthModalState] = useRecoilState(
     authenticationModalState
   );
 
+  const isLanding = router.route === "/";
+
   return (
     <>
-      <Box px={4} borderBottom="1px" borderBottomColor={"gray.100"}>
+      <Box
+        px={"4"}
+        py="1"
+        pos={isLanding ? "sticky" : "inherit"}
+        top="0"
+        zIndex={"overlay"}
+        bg={isLanding ? "transparent" : "white"}
+      >
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <IconButton
             size={"md"}
@@ -62,45 +56,39 @@ export default function Navbar() {
             display={{ md: "none" }}
             onClick={isOpen ? onClose : onOpen}
           />
-          <HStack spacing={8} alignItems={"center"}>
-            <Box onClick={() => router.push("/")}>
-              <Img
-                height={"45px"}
+
+          <HStack>
+            <Box ml="4" mr="8" display={{ base: "none", sm: "flex" }}>
+              <GiTreeDoor
+                fontSize={"40px"}
                 cursor="pointer"
-                src="https://avatars.githubusercontent.com/u/93862968?s=400&u=e306baa9eeb66de4ea0b6b97058c68d44d503cf0&v=4"
-              ></Img>
+                color={isLanding ? "white" : "black"}
+                onClick={() => router.push("/")}
+              />
             </Box>
-            <HStack
-              as={"nav"}
-              spacing={4}
-              display={{ base: "none", md: "flex" }}
-            >
-              {Links.map((link) => (
-                <NavLink key={link.label}>{link.label}</NavLink>
-              ))}
-            </HStack>
           </HStack>
+
           <Flex alignItems={"center"}>
             {!session?.user ? (
               <Button
                 variant={"text"}
                 size={"sm"}
-                onClick={() => setAuthModalModalIsOpen(true)}
+                onClick={() => setAuthModalState({ open: true, signUp: false })}
               >
                 Log in
               </Button>
             ) : null}
-            {session?.user ? (
+
+            {!session?.user ? (
               <Button
                 variant={"text"}
                 size={"sm"}
-                mr={4}
-                onClick={() => router.push("/workshops/new")}
-                color="green.500"
+                onClick={() => setAuthModalState({ open: true, signUp: true })}
               >
-                Create a workshop
+                Sign up
               </Button>
             ) : null}
+
             {session?.user ? (
               <Menu>
                 <MenuButton
@@ -117,15 +105,16 @@ export default function Navbar() {
                     }
                   />
                 </MenuButton>
-                <MenuList>
-                  <MenuItem onClick={() => router.push("/me")}>
-                    View profile
-                  </MenuItem>
-                  <MenuItem onClick={() => router.push("/me/dashboard")}>
+                <MenuList border={"1px solid black"} bg="white">
+                  <MenuItem
+                    _hover={{ bg: "white" }}
+                    onClick={() => router.push("/dashboard")}
+                  >
                     Dashboard
                   </MenuItem>
                   <Divider />
                   <MenuItem
+                    _hover={{ bg: "white" }}
                     onClick={() => {
                       auth.signOut();
                     }}
@@ -142,7 +131,9 @@ export default function Navbar() {
           <Box pb={4} display={{ md: "none" }}>
             <Stack as={"nav"} spacing={4}>
               {Links.map((link) => (
-                <NavLink key={link.label}>{link.label}</NavLink>
+                <Link key={link.href} href={link.href}>
+                  {link.label}
+                </Link>
               ))}
             </Stack>
           </Box>
@@ -151,8 +142,8 @@ export default function Navbar() {
 
       {
         <AuthenticationModal
-          isOpen={authModalIsOpen}
-          onClose={() => setAuthModalModalIsOpen(false)}
+          isOpen={authModalState.open}
+          onClose={() => setAuthModalState({ open: false, signUp: false })}
         />
       }
     </>

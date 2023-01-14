@@ -1,70 +1,89 @@
-import { Box, Img, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Card,
+  CardBody,
+  Flex,
+  Heading,
+  Image,
+  Text,
+} from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React from "react";
 import { Workshop } from "../../shared/schemas";
+
+import { BsArrowRightCircleFill } from "react-icons/bs";
 
 export default function WorkshopCard({ workshop }: { workshop: Workshop }) {
   const router = useRouter();
 
   return (
-    <Box
-      cursor={"pointer"}
-      borderBottom="1px"
-      borderBottomColor={"gray.300"}
-      bg="white"
+    <Card
+      boxShadow={"none"}
       onClick={() => router.push(`/workshops/${workshop.id}`)}
-      py={{ base: "2", md: "4" }}
+      cursor="pointer"
+      border="1px solid lightgray"
+      maxW="200px"
       _hover={{
-        background: "gray.50",
+        border: "1px solid black",
+        transform: "translate(10px, 0px)",
+        transition: "transform .3s ease-out",
+        boxShadow: "lg",
       }}
+      rounded={"2xl"}
+      minW="container.md"
+      bg="white"
+      py="4"
+      px="4"
     >
-      <Box display="flex" pr="4">
-        <Img
-          src="https://thumbs.dreamstime.com/b/software-development-programming-coding-learning-information-technology-courses-courses-all-levels-computing-hi-tech-158671629.jpg"
-          rounded={"lg"}
-          mx="4"
-          height={{ base: "40px", md: "90px" }}
-        />
-        <Box
-          display={"flex"}
-          flexDir="column"
-          justifyContent={"space-between"}
-          width={"100%"}
-        >
-          <Box>
-            <Text
-              fontSize={"14px"}
-              fontWeight="bold"
-              bgGradient="linear(to-r, teal.500, green.500)"
-              bgClip="text"
-            >
-              {workshop.category}
-            </Text>
-            <Text
-              fontSize={"16px"}
-              fontWeight="semibold"
-              noOfLines={1}
-              color="gray.600"
-            >
-              {workshop.name}
-            </Text>
-            <Text color={"gray.600"} fontSize={"14px"} noOfLines={2}>
-              {workshop.description}
-            </Text>
-          </Box>
-          {/* <Box
-            justifyContent="space-between"
-            pr={10}
-            color={"gray.500"}
-            display={{ base: "none", md: "flex" }}
-            pt="2"
+      <CardBody>
+        <Heading size={"md"} pb="4" letterSpacing={"wide"}>
+          {workshop.name}
+        </Heading>
+        <Text w="85%">{workshop.description}</Text>
+
+        <Flex justifyContent="start" alignItems="center" pt="5">
+          <Flex
+            fontSize={"xs"}
+            px="2"
+            py="1"
+            border={"1px solid black"}
+            w="fit-content"
+            rounded={"full"}
+            mr="1"
+            bg="black"
+            color="white"
           >
-            <Text fontSize={"14px"} fontWeight="medium">
-              4 spaces available
-            </Text>
-          </Box> */}
+            Virtual
+          </Flex>
+
+          <Flex
+            fontSize={"xs"}
+            px="2"
+            py="1"
+            mr="1"
+            border={"1px solid black"}
+            w="fit-content"
+            rounded={"full"}
+          >
+            Bristol
+          </Flex>
+
+          <Flex
+            fontSize={"xs"}
+            px="2"
+            py="1"
+            border={"1px solid black"}
+            w="fit-content"
+            rounded={"full"}
+          >
+            3 spaces
+          </Flex>
+        </Flex>
+
+        <Box pos={"absolute"} top="10" right={"10"} fontSize="30px">
+          <BsArrowRightCircleFill />
         </Box>
-      </Box>
-    </Box>
+      </CardBody>
+    </Card>
   );
 }

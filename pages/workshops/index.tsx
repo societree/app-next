@@ -1,28 +1,24 @@
-import Layout from "../../components/Layout/Layout";
-import { Workshop } from "../../shared/schemas";
-import { data } from "../../shared/data/supabase";
-import { User } from "@supabase/supabase-js";
-import { auth } from "../../shared/auth/supabase";
+import Layout from "@/components/Layout/Layout";
+import React from "react";
 import WorkshopList from "../../components/Workshop/WorkshopList";
 
-export default function Workshops({
-  workshops,
-}: {
-  workshops: Workshop[];
-  user: User;
-}) {
+export default function Workshops() {
+  const [state, setState] = React.useState("gray.50");
+
+  const listenScrollEvent = (e: any) => {
+    if (window.scrollY > 1000) {
+      setState("blue.50");
+    } else {
+      setState("gray.50");
+    }
+  };
+
+  React.useEffect(() => {
+    window.addEventListener("scroll", listenScrollEvent);
+  }, []);
   return (
-    <Layout>
-      <WorkshopList workshops={workshops} />
+    <Layout bg={state}>
+      <WorkshopList />
     </Layout>
   );
-}
-
-export async function getServerSideProps({ req }: any) {
-  const user = await auth.getUserByCookie(req);
-  const workshops = await data.getAvailableWorkshops();
-
-  return {
-    props: { user, workshops },
-  };
 }

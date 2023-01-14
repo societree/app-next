@@ -5,26 +5,16 @@ import { auth } from "../shared/auth/supabase";
 import { data } from "../shared/data/supabase";
 import { User } from "../shared/schemas";
 import AccountAvatar from "./AccountAvatar";
-import { HiOutlineMail, HiUserGroup } from "react-icons/hi"
+import { HiOutlineMail, HiUserGroup } from "react-icons/hi";
 import { dateToReadable } from "../utils/dates";
 
 export default function Account({ user }: { user: User }) {
-  const [loading, setLoading] = useState(true);
+  const [_, setLoading] = useState(true);
 
-  const {
-    register,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useForm();
+  const { setValue, watch } = useForm();
 
-  const {
-    username,
-    avatar_url,
-    full_name,
-    member_since,
-    hosted_workshops
-  } = watch();
+  const { username, avatar_url, full_name, member_since, hosted_workshops } =
+    watch();
 
   const getProfile = useCallback(async () => {
     try {
@@ -35,7 +25,7 @@ export default function Account({ user }: { user: User }) {
         return;
       }
 
-      const profile = await data.getProfile(user.id)
+      const profile = await data.getProfile(user.id);
 
       if (profile) {
         setValue("username", profile.username);
@@ -65,7 +55,7 @@ export default function Account({ user }: { user: User }) {
         avatar_url: avatar_url,
       };
 
-      await data.updateProfile(updates)
+      await data.updateProfile(updates);
     } catch (error: any) {
       alert(`Error updating profile: ${error.message}`);
     } finally {
@@ -78,31 +68,10 @@ export default function Account({ user }: { user: User }) {
   }, [user, getProfile]);
 
   return (
-    <Container maxW="container.sm">
-      <Box>
-        <Flex px={5} pt={5} pb={3} bg="white">
-          <AccountAvatar
-            url={avatar_url}
-            onUpload={(url: any) => {
-              setValue("avatar_url", url);
-              updateProfile({ avatar_url: url });
-            }}
-          />
-          <Flex flexDirection={"column"} justifyContent="center" ml={1}>
-            <Heading size={"md"}>{full_name} (@{username})</Heading>
-            {/* <Heading size={"md"}>@{username}</Heading> */}
-            <Text size={"md"}>Member since {dateToReadable(member_since, false)}</Text>
-            <HStack spacing={2}>
-              <HiOutlineMail />
-              <Text size={"sm"} color={"gray.600"}>{user?.email}</Text>
-            </HStack>
-            <HStack spacing={2}>
-              <HiUserGroup />
-              <Text size={"sm"} color={"gray.600"}>Hosted {hosted_workshops} {hosted_workshops == 1 ? "Workshop" : "Workshops"}</Text>
-            </HStack>
-          </Flex>
-        </Flex>
-      </Box>
-    </Container>
+    <Box mb="20">
+      <Heading size={"2xl"}>
+        {full_name} (@{username})
+      </Heading>
+    </Box>
   );
 }

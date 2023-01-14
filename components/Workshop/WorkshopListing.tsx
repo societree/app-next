@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Container } from "@chakra-ui/react";
 import React from "react";
 import { Booking, Slot, Workshop } from "../../shared/schemas";
 import WorkshopListingBody from "./WorkshopListingBody";
@@ -13,10 +13,14 @@ interface IProps {
 
 export default function WorkshopListing({ workshop, slots, bookings }: IProps) {
   return (
-    <Box>
+    <Container maxW={"container.lg"} py="20">
       <WorkshopListingHeading workshop={workshop} />
       <WorkshopListingBody workshop={workshop} />
-      <WorkshopListingSlotList workshop={workshop} slots={slots} bookings={bookings} />
-    </Box>
+      <WorkshopListingSlotList
+        workshop={workshop}
+        slots={slots}
+        bookings={bookings}
+      />
+    </Container>
   );
 }
