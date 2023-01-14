@@ -4,7 +4,7 @@ import Footer from "../Footer";
 import Navbar from "./Navbar";
 
 type LayoutProps = {
-  bg: string;
+  bg?: string;
   children: ReactNode;
 };
 
