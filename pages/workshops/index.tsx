@@ -3,13 +3,13 @@ import React from "react";
 import WorkshopList from "../../components/Workshop/WorkshopList";
 
 export default function Workshops() {
-  const [state, setState] = React.useState("gray.50");
+  const [bg, setBg] = React.useState("gray.50");
 
   const listenScrollEvent = (e: any) => {
     if (window.scrollY > 1000) {
-      setState("blue.50");
+      setBg("blue.50");
     } else {
-      setState("gray.50");
+      setBg("gray.50");
     }
   };
 
@@ -17,7 +17,7 @@ export default function Workshops() {
     window.addEventListener("scroll", listenScrollEvent);
   }, []);
   return (
-    <Layout bg={state}>
+    <Layout bg={bg}>
       <WorkshopList />
     </Layout>
   );
