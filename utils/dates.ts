@@ -122,8 +122,9 @@ export function endOfThisWeekendAsISOString(): string {
 }
 
 export function isBeforeNow(date: Date): boolean {
-  const now = new Date()
-  return date < now
+  const utcDate = date.getTime();
+  const utcNow = new Date().getTime();
+  return utcDate < utcNow;
 }
 
 export function isOlderThan(date: Date, duration: Duration): boolean {
